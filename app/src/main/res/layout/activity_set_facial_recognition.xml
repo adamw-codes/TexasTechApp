@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SetFacialRecognitionActivity">
+
+    <TextView
+        android:id="@+id/setFacialRecognitionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Set Facial Recognition"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/cameraView"
+        android:layout_width="319dp"
+        android:layout_height="346dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/camera_icon" />
+
+    <TextView
+        android:id="@+id/setNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:text="User Profile Name:"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/retryButtom" />
+
+    <EditText
+        android:id="@+id/editTextUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintStart_toEndOf="@+id/setNameText"
+        app:layout_constraintTop_toBottomOf="@+id/saveUserButton" />
+
+    <Button
+        android:id="@+id/retryButtom"
+        android:layout_width="140dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="400dp"
+        android:onClick="onRetryClick"
+        android:text="RETRY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setFacialRecognitionText" />
+
+    <Button
+        android:id="@+id/saveUserButton"
+        android:layout_width="140dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="400dp"
+        android:layout_marginEnd="20dp"
+        android:onClick="onSaveUserClick"
+        android:text="SAVE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setFacialRecognitionText" />/>
+
+    <LinearLayout
+        android:id="@+id/popUpWindowFP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="172dp"
+        android:layout_marginEnd="172dp"
+        android:background="#B68888"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/popupTextFP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please look at the camera. Your picture will display here. Once the picture is acceptable, please enter a name and save." />
+
+        <Button
+            android:id="@+id/popUpDismissButtonFP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onPopUpDismissClick"
+            android:text="Dismiss" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

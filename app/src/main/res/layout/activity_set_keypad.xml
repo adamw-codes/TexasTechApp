@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SetKeypadActivity">
+
+    <TextView
+        android:id="@+id/keypadText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Keypad"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/keypadValueText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:text="Enter a 6-digit pin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/keypadText" />
+
+    <Button
+        android:id="@+id/oneButton"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="40dp"
+        android:text="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/keypadText"
+        android:onClick="onNumberClick" />
+
+    <Button
+        android:id="@+id/twoButton"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="40dp"
+        android:text="2"
+        app:layout_constraintStart_toEndOf="@+id/oneButton"
+        app:layout_constraintTop_toBottomOf="@+id/keypadText"
+        android:onClick="onNumberClick" />
+
+    <Button
+        android:id="@+id/threeButton"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="70dp"
+        android:text="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/twoButton"
+        app:layout_constraintTop_toBottomOf="@+id/keypadText"
+        android:onClick="onNumberClick" />
+
+    <Button
+        android:id="@+id/fourButton"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="45dp"
+        android:text="4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/oneButton"
+        android:onClick="onNumberClick" />
+
+    <Button
+        android:id="@+id/fiveButton"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="45dp"
+        android:text="5"
+        app:layout_constraintStart_toEndOf="@+id/fourButton"
+        app:layout_constraintTop_toBottomOf="@+id/twoButton"
+        android:onClick="onNumberClick" />
+
+    <Button
+        android:id="@+id/sixButton"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="70dp"
+        android:text="6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fiveButton"
+        app:layout_constraintTop_toBottomOf="@+id/threeButton"
+        android:onClick="onNumberClick" />
+
+    <Button
+        android:id="@+id/sevenButton"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="45dp"
+        android:text="7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fourButton"
+        android:onClick="onNumberClick" />
+
+    <Button
+        android:id="@+id/eightButton"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="45dp"
+        android:text="8"
+        app:layout_constraintStart_toEndOf="@+id/sevenButton"
+        app:layout_constraintTop_toBottomOf="@+id/fiveButton"
+        android:onClick="onNumberClick" />
+
+    <Button
+        android:id="@+id/nineButton"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="70dp"
+        android:text="9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/eightButton"
+        app:layout_constraintTop_toBottomOf="@+id/sixButton"
+        android:onClick="onNumberClick" />
+
+    <Button
+        android:id="@+id/zeroButton"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="45dp"
+        android:text="0"
+        app:layout_constraintStart_toEndOf="@+id/sevenButton"
+        app:layout_constraintTop_toBottomOf="@+id/eightButton"
+        android:onClick="onNumberClick" />
+
+    <Button
+        android:id="@+id/clearButton"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="45dp"
+        android:onClick="onClearClick"
+        android:text="CLEAR"
+        android:textSize="7sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sevenButton" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="70dp"
+        android:onClick="onSaveClick"
+        android:text="SAVE"
+        android:textSize="8sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/zeroButton"
+        app:layout_constraintTop_toBottomOf="@+id/nineButton" />
+
+    <SeekBar
+        android:id="@+id/expirySeekBar"
+        android:layout_width="254dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="63dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/expiryCheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/zeroButton" />
+
+    <CheckBox
+        android:id="@+id/expiryCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:checked="true"
+        android:gravity="center|left"
+        android:onClick="onExpiryCheckClick"
+        app:layout_constraintStart_toEndOf="@+id/expiryText"
+        app:layout_constraintTop_toBottomOf="@+id/zeroButton" />
+
+    <TextView
+        android:id="@+id/expiryText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
+        android:text="No Expiry"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/zeroButton" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
