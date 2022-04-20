@@ -24,8 +24,6 @@ public class SetFingerprintActivity extends AppCompatActivity {
         topCheck = findViewById(R.id.fingerprintTopCheckBox);
         bottomCheck = findViewById(R.id.fingerprintBottomCheckBox);
         popUpWindow = findViewById(R.id.popUpWindowFP);
-        Intent intent = getIntent();
-        userList = (ArrayList<String>) intent.getSerializableExtra("userList");
     }
 
     private void checkFingerprints() {

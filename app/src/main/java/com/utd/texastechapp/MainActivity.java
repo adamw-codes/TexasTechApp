@@ -14,13 +14,22 @@ import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<User> userList = new ArrayList<User>();
     TextView userNameText;
-    Communication comm = new Communication();
+    Communication comm;
+
+    {
+        try {
+            comm = new Communication();
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +41,24 @@ public class MainActivity extends AppCompatActivity {
 //        if(userList.size() != 0) {
 //            setUserNameText(userList.get(0));
 //        }
-        String setup = ((Communication) this.getApplication()).ReceivedMessage();
-        ((Communication) this.getApplication()).SendMessage("Set Up");
-        String response = ((Communication) this.getApplication()).ReceivedMessage();
-        ((Communication) this.getApplication()).SendMessage("Get Admin User");
-        response = ((Communication) this.getApplication()).ReceivedMessage();
-        try {
-            User adminUser = ((Communication) this.getApplication()).getUser();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(!((Communication)this.getApplicationContext()).isConnected()){
+            String setup = ((Communication) this.getApplication()).ReceivedMessage();
+            ((Communication) this.getApplication()).SendMessage("Set Up");
+            String response = ((Communication) this.getApplication()).ReceivedMessage();
+            ((Communication) this.getApplicationContext()).setConnected(true);
         }
+
+        ((Communication) this.getApplication()).SendMessage("Get Admin User");
+        String response = ((Communication) this.getApplication()).ReceivedMessage();
+        if(!response.equals("NOUS")) {
+            try {
+                User adminUser = ((Communication) this.getApplication()).getUser();
+                userNameText.setText(adminUser.getName());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     private void createUserListFile() {

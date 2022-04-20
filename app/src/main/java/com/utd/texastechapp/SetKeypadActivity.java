@@ -49,7 +49,7 @@ public class SetKeypadActivity extends AppCompatActivity {
             }
             keypadValue = keypadValue + digit;
             keypadValueText.setText(keypadValue);
-            if (keypadValue.length() == 6){
+            if (keypadValue.length() == 4){
                 maxKeyLimit = true;
             }
         }
@@ -57,6 +57,9 @@ public class SetKeypadActivity extends AppCompatActivity {
 
     public void onSaveClick(View view) {
         keypadValueFinal = (String) keypadValueText.getText();
+        ((Communication) this.getApplicationContext()).SendMessage("Set the Keypad");
+        ((Communication) this.getApplicationContext()).ReceivedMessage();
+        ((Communication) this.getApplicationContext()).updateKeypad(keypadValueFinal);
         Intent intent = new Intent(this, LockModesActivity.class);
         startActivity(intent);
     }

@@ -21,7 +21,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.net.SocketException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -31,6 +33,7 @@ import java.util.Arrays;
 public class Communication extends Application implements Serializable {
     private Socket socket;
 
+    private boolean connected = false;
     private boolean socketRunning = false;
 
     private DataOutputStream out;
@@ -39,7 +42,7 @@ public class Communication extends Application implements Serializable {
     private final String SERVER_IP_PI = "172.20.10.8";
     private final int SERVER_PORT = 5000;
 
-    public Communication(){
+    public Communication() throws SocketException {
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8)
         {
@@ -47,20 +50,25 @@ public class Communication extends Application implements Serializable {
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-
-        Connect(SERVER_IP_PI);
-
+        boolean connection;
+        do {
+            connection = Connect(SERVER_IP_PI);
+        } while(connection);
     }
 
-    public void Connect(String SERVER_IP_PI){
+    public boolean Connect(String SERVER_IP_PI){
         try {
-            socket = new Socket(SERVER_IP_PI, SERVER_PORT);
+            SocketAddress socketAddress = new InetSocketAddress(SERVER_IP_PI, SERVER_PORT);
+            Socket socket = new Socket();
+            socket.connect(socketAddress, 1000);
             out = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
             socketRunning = true;
             System.out.println("STARTING RECEIVE THREAD");
+            return false;
         } catch (IOException e) {
             e.printStackTrace();
+            return true;
         }
     }
 
@@ -97,8 +105,32 @@ public class Communication extends Application implements Serializable {
                     case ("RGPC"):
                         receivedMessage = "RGPC";
                         break;
+                    case("RGDN"):
+                        receivedMessage = "RGDN";
+                        break;
                     case("REDY"):
-                        receivedMessage = "RGPC";
+                        receivedMessage = "REDY";
+                        break;
+                    case("SDAU"):
+                        receivedMessage = "SDAU";
+                        break;
+                    case("SDUL"):
+                        receivedMessage = "SDUL";
+                        break;
+                    case("RMVU"):
+                        receivedMessage = "RMVU";
+                        break;
+                    case("NOUS"):
+                        receivedMessage = "NOUS";
+                        break;
+                    case("KPRC"):
+                        receivedMessage = "KPRC";
+                        break;
+                    case("CURI"):
+                        receivedMessage = "CURI";
+                        break;
+                    case("CEML"):
+                        receivedMessage = "CEML";
                         break;
                 }
                 return receivedMessage;
@@ -112,6 +144,7 @@ public class Communication extends Application implements Serializable {
 
     public void SendMessage(String message){
         String sentMessage = "";
+
         switch(message){
             case("Set Up"):
                 sentMessage = "STUP";
@@ -137,13 +170,32 @@ public class Communication extends Application implements Serializable {
             case("Face Denied"):
                 sentMessage = "DENY";
                 break;
+            case("Registering Done"):
+                sentMessage = "RGDN";
+                break;
             case("Get Admin User"):
                 sentMessage = "SDAU";
                 break;
-        }
-
-        if(message.startsWith("NAME^")){
-            sentMessage = message;
+            case("Get User List"):
+                sentMessage = "SDUL";
+                break;
+            case("Update User Admin"):
+                sentMessage = "UPAS";
+                break;
+            case("Remove User"):
+                sentMessage = "RMVU";
+                break;
+            case("Set the Keypad"):
+                sentMessage = "KPCC";
+                break;
+            case("Change URI Spotify"):
+                sentMessage = "CURI";
+                break;
+            case("Change Email"):
+                sentMessage = "CEML";
+                break;
+            default:
+                sentMessage = message;
         }
 
         try {
@@ -212,8 +264,9 @@ public class Communication extends Application implements Serializable {
             byte[] inData = new byte[size];
             in.readFully(inData);
             String userData = new String(inData, StandardCharsets.US_ASCII);
-            String[] curUser = userData.split("&&&", 2);
-            User user = new User(curUser[0], curUser[1]);
+            System.out.println(userData);
+            String[] curUser = userData.split("&&&", 3);
+            User user = new User(curUser[0], curUser[1], curUser[2]);
             return user;
         }
         else{
@@ -241,4 +294,27 @@ public class Communication extends Application implements Serializable {
         return null;
     }
 
+    public void updateAdminUser(String userID) {
+        SendMessage(userID);
+    }
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
+    }
+
+    public void updateKeypad(String keypadData){
+        SendMessage(keypadData);
+    }
+
+    public void sendURI(String URI) {
+        SendMessage(URI);
+    }
+
+    public void sendEmail(String email){
+        SendMessage(email);
+    }
 }

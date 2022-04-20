@@ -22,13 +22,14 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class UserListActivity extends AppCompatActivity implements usersAdapter.OnUserListener{
-    ArrayList<String> userList = new ArrayList<String>();
+    ArrayList<User> userList = new ArrayList<User>();
     int selectedUser;
     RecyclerView recyclerView;
     usersAdapter adapter;
     TextView userPicked;
     CheckBox primaryCheckBox;
     Communication comm;
+    String response;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,15 @@ public class UserListActivity extends AppCompatActivity implements usersAdapter.
         recyclerView = findViewById(R.id.usersListRecyclerView);
         primaryCheckBox = findViewById(R.id.primaryCheckBox);
         Intent intent = getIntent();
-        userList = (ArrayList<String>) intent.getSerializableExtra("userList");
+        ((Communication)this.getApplication()).SendMessage("Get User List");
+        response = ((Communication) this.getApplication()).ReceivedMessage();
+        if(!response.equals("NOUS")) {
+            try {
+                userList = ((Communication) this.getApplication()).getUserList();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         setAdapter();
     }
 
@@ -53,7 +62,6 @@ public class UserListActivity extends AppCompatActivity implements usersAdapter.
         Intent intent = new Intent(this, SetFingerprintActivity.class);
         ((Communication) this.getApplication()).SendMessage("Start Registering");
         String response = ((Communication) this.getApplication()).ReceivedMessage();
-        intent.putExtra("userList", userList);
         startActivity(intent);
     }
 
@@ -80,42 +88,25 @@ public class UserListActivity extends AppCompatActivity implements usersAdapter.
         for(int i = 0; i < selectedUser; i++){
             Collections.swap(userList, selectedUser - 1 - i, selectedUser - i);
         }
+        ((Communication)this.getApplication()).SendMessage("Update User Admin");
+        String response = ((Communication)this.getApplication()).ReceivedMessage();
+        ((Communication)this.getApplication()).updateAdminUser(userList.get(0).getUserID());
+        userList.get(0).setAdmin(true);
+        userList.get(selectedUser).setAdmin(false);
         selectedUser = 0;
         adapter.notifyDataSetChanged();
     }
 
     public void onBackClick(View view) {
-        // need to write function that writes to the userList file
-        FileOutputStream stream = null;
-        File directory = getFilesDir();
-        // sets name based on directory and the quiz name
-        File userFileDir = new File(directory, "UserList.txt");
-        try{
-            stream = new FileOutputStream(userFileDir);
-            for(int i = 0; i < userList.size(); i++) {
-                String tempName = userList.get(i) + "\n";
-                stream.write(tempName.getBytes());
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            // close the stream after the file has been written
-            if (stream != null) {
-                try {
-                    stream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
     public void onDeleteUserClick(View view) {
         if(userList.size() != 0) {
+            ((Communication)this.getApplicationContext()).SendMessage("Remove User");
+            String response = ((Communication)this.getApplicationContext()).ReceivedMessage();
+            ((Communication)this.getApplicationContext()).SendMessage(userList.get(selectedUser).getUserID());
             userList.remove(selectedUser);
             adapter.notifyDataSetChanged();
         }

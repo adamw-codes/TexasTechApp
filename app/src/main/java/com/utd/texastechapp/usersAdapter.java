@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class usersAdapter extends RecyclerView.Adapter<usersAdapter.MyViewHolder> {
-    private ArrayList<String> userList = new ArrayList<String>();
+    private ArrayList<User> userList = new ArrayList<User>();
     private OnUserListener localUserListener;
 
-    public usersAdapter(ArrayList<String> userList, OnUserListener onUserListener){
+    public usersAdapter(ArrayList<User> userList, OnUserListener onUserListener){
         this.userList = userList;
         localUserListener = onUserListener;
     }
@@ -44,7 +44,7 @@ public class usersAdapter extends RecyclerView.Adapter<usersAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull usersAdapter.MyViewHolder holder, int position) {
-        String user = userList.get(position);
+        String user = userList.get(position).getName();
         holder.userText.setText(user);
     }
 

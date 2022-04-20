@@ -26,9 +26,6 @@ public class SetFacialRecognitionActivity extends AppCompatActivity {
         userName = findViewById(R.id.editTextUserName);
         cameraImage = findViewById(R.id.cameraView);
         popUpWindow = findViewById(R.id.popUpWindowFP);
-        Intent intent = getIntent();
-        userList = (ArrayList<String>) intent.getSerializableExtra("userList");
-
     }
 
 
@@ -36,6 +33,8 @@ public class SetFacialRecognitionActivity extends AppCompatActivity {
         String savedUser = userName.getText().toString();
         if(!savedUser.equals("")) {
             ((Communication) this.getApplication()).sendUserName(savedUser);
+            String response = ((Communication) this.getApplication()).ReceivedMessage();
+            ((Communication) this.getApplication()).SendMessage("Registering Done");
             Intent intent = new Intent(this, UserListActivity.class);
             intent.putExtra("userList", userList);
             startActivity(intent);
